@@ -18,5 +18,10 @@
     "sourceMap": true,
     "skipLibCheck": true,
     "target": "es5"
-  }
+  },
+  "extends": [
+    "tslint:latest",
+    "tslint-config-airbnb",
+    "tslint-config-prettier"
+  ]
 }
