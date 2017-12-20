@@ -1,11 +1,11 @@
 import { createSelector } from '@ngrx/store';
 import { Pizza } from '../../models/pizza.model';
+import { Topping } from '../../models/topping.model';
 
 import * as fromRoot from './../../../app/store';
 import * as fromFeature from './../reducers';
 import * as fromPizzas from '../reducers/pizzas.reducer';
-
-import { ProductsState } from '../reducers';
+import * as fromToppings from './toppings.selectors';
 
 export const getPizzaState = createSelector(
   fromFeature.getProductsState,
@@ -29,3 +29,16 @@ export const getAllPizzas = createSelector(getPizzasEntities, entities => {
 export const getPizzasLoaded = createSelector(getPizzaState, fromPizzas.getPizzasLoaded);
 
 export const getAllLoading = createSelector(getPizzaState, fromPizzas.getPizzasLoading);
+
+export const getPizzaVisualized = createSelector(
+  getSelectedPizza,
+  fromToppings.getToppingsEntities,
+  fromToppings.getSelectedToppings,
+  (pizza: Pizza, toppingsEntities: Array<Topping>, selectedToppings: Array<number>) => {
+    const toppings = selectedToppings.map(id => toppingsEntities[id]);
+    return {
+      ...pizza,
+      toppings
+    };
+  }
+);
